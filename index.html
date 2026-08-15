@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gloss da Kiko — The Frey | Creator Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --pink:       #f0718d;
+      --pink-light: #f5899f;
+      --pink-glow:  rgba(240,113,141,0.25);
+      --pink-dim:   rgba(240,113,141,0.08);
+      --bg:         #080808;
+      --card:       #0e0e0e;
+      --border:     rgba(255,255,255,0.07);
+      --gray:       #888;
+      --white:      #fff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ─── AMBIENT GLOW ─────────────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 40% at 75% 30%, rgba(240,113,141,0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 30% at 20% 80%, rgba(240,113,141,0.04) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ─── NAV ──────────────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 48px;
+      background: rgba(8,8,8,0.8);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--border);
+      transition: background .3s;
+    }
+
+    .nav-logo {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 12px; font-weight: 600; letter-spacing: .22em;
+      text-transform: uppercase; color: var(--white); text-decoration: none;
+    }
+    .nav-logo .star { color: var(--pink); font-size: 14px; }
+
+    .nav-links { display: flex; gap: 40px; list-style: none; }
+    .nav-links a {
+      color: rgba(255,255,255,.6); text-decoration: none;
+      font-size: 11px; font-weight: 500; letter-spacing: .18em;
+      text-transform: uppercase; transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--white); }
+
+    .btn-audio {
+      display: flex; align-items: center; gap: 9px;
+      padding: 9px 20px;
+      border: 1.5px solid var(--pink); border-radius: 100px;
+      color: var(--pink); font-size: 11px; font-weight: 700;
+      letter-spacing: .15em; text-transform: uppercase;
+      text-decoration: none; background: transparent;
+      transition: all .3s; cursor: pointer;
+    }
+    .btn-audio:hover {
+      background: var(--pink); color: var(--white);
+      box-shadow: 0 0 24px var(--pink-glow);
+    }
+
+    .wave-bars { display: flex; align-items: center; gap: 2px; }
+    .wb {
+      width: 2px; border-radius: 2px; background: currentColor;
+      animation: wv 1.1s ease-in-out infinite;
+    }
+    .wb:nth-child(1) { height: 5px;  animation-delay: 0s; }
+    .wb:nth-child(2) { height: 10px; animation-delay: .1s; }
+    .wb:nth-child(3) { height: 14px; animation-delay: .2s; }
+    .wb:nth-child(4) { height: 10px; animation-delay: .3s; }
+    .wb:nth-child(5) { height: 5px;  animation-delay: .4s; }
+    @keyframes wv {
+      0%,100% { transform: scaleY(1); }
+      50%      { transform: scaleY(.35); }
+    }
+
+    /* ─── HERO ─────────────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      display: grid; grid-template-columns: 1fr 1fr;
+      align-items: center; gap: 20px;
+      padding: 110px 48px 80px;
+      position: relative; overflow: hidden;
+    }
+
+    .hero-content { position: relative; z-index: 2; }
+
+    .gloss-big {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(90px, 13vw, 175px);
+      line-height: .88;
+      color: var(--pink);
+      display: block;
+      text-shadow:
+        0 0 40px rgba(240,113,141,.45),
+        0 0 100px rgba(240,113,141,.15);
+      letter-spacing: .01em;
+    }
+
+    .dakiko {
+      font-size: clamp(22px, 3.2vw, 44px);
+      font-weight: 300;
+      letter-spacing: .5em;
+      color: var(--pink);
+      display: block;
+      text-transform: uppercase;
+      margin-top: 4px;
+      margin-left: 4px;
+    }
+
+    .hero-tagline {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 10px; font-weight: 600; letter-spacing: .35em;
+      text-transform: uppercase; color: var(--gray);
+      margin: 28px 0 18px;
+    }
+    .hero-tagline .pk { color: var(--pink); font-size: 12px; }
+
+    .hero-desc {
+      font-size: 15px; color: rgba(255,255,255,.65);
+      line-height: 1.75; max-width: 400px; margin-bottom: 36px;
+    }
+    .hero-desc b { color: var(--pink); font-weight: 400; }
+
+    .btn-play {
+      display: inline-flex; align-items: center; gap: 14px;
+      padding: 13px 28px;
+      border: 1.5px solid rgba(240,113,141,.45); border-radius: 100px;
+      color: var(--white); font-size: 11px; font-weight: 600;
+      letter-spacing: .18em; text-transform: uppercase;
+      text-decoration: none; background: rgba(240,113,141,.07);
+      transition: all .3s; cursor: pointer;
+    }
+    .btn-play:hover {
+      background: rgba(240,113,141,.18);
+      border-color: var(--pink);
+      box-shadow: 0 0 30px var(--pink-glow);
+    }
+    .play-circle {
+      width: 28px; height: 28px; border-radius: 50%;
+      border: 1.5px solid var(--pink);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .play-circle::after {
+      content: '';
+      width: 0; height: 0;
+      border-left: 9px solid var(--pink);
+      border-top: 6px solid transparent;
+      border-bottom: 6px solid transparent;
+      margin-left: 2px;
+    }
+
+    .hero-image {
+      display: flex; align-items: center; justify-content: center;
+      position: relative; z-index: 1;
+    }
+    /* Crops + fades the top of the image (where "GLOSS DA KIKO" is baked in).
+       Image is 941×1672 px (ratio 1.777). At max-width 520px the rendered
+       height ≈ 924px. We shift up -62% of container width = -322px, which
+       starts the visible window at 34.9% of the image — showing the full
+       bottle cap (~43%) while removing most of the title text. The gradient
+       mask dissolves the first 22% of the container so any residual text at
+       the very top merges into the black background naturally. */
+    .hero-img-crop {
+      width: 100%;
+      max-width: 520px;
+      overflow: hidden;
+      line-height: 0;
+      flex-shrink: 0;
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 22%);
+      mask-image: linear-gradient(to bottom, transparent 0%, black 22%);
+    }
+    .hero-img-crop img {
+      width: 100%;
+      display: block;
+      margin-top: -62%;
+      animation: float 7s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-14px); }
+    }
+
+    /* ─── VIBE SECTION ─────────────────────────────────────── */
+    .vibe-section {
+      padding: 80px 48px;
+      position: relative;
+    }
+    .vibe-section::before {
+      content: '';
+      position: absolute; top: 0; left: 48px; right: 48px; height: 1px;
+      background: linear-gradient(90deg,
+        transparent 0%, var(--border) 20%,
+        rgba(240,113,141,.12) 50%,
+        var(--border) 80%, transparent 100%);
+    }
+
+    .section-label {
+      text-align: center;
+      font-size: 11px; font-weight: 600; letter-spacing: .4em;
+      text-transform: uppercase; color: var(--gray);
+      margin-bottom: 52px;
+      display: flex; align-items: center; justify-content: center; gap: 18px;
+    }
+    .section-label .pk { color: var(--pink); font-size: 13px; }
+
+    .vibe-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 20px; max-width: 860px; margin: 0 auto;
+    }
+
+    .vibe-card {
+      padding: 30px 18px 28px;
+      border: 1px solid var(--border); border-radius: 14px;
+      background: var(--card);
+      text-align: center; text-decoration: none; color: inherit;
+      display: block;
+      transition: all .3s; cursor: pointer;
+    }
+    .vibe-card:hover {
+      border-color: rgba(240,113,141,.35);
+      background: rgba(240,113,141,.05);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(240,113,141,.12);
+    }
+
+    .vibe-icon {
+      width: 48px; height: 48px; margin: 0 auto 14px;
+      color: var(--pink);
+    }
+    .vibe-icon svg { width: 100%; height: 100%; }
+
+    .vibe-name {
+      font-size: 12px; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: var(--pink); margin-bottom: 8px;
+    }
+    .vibe-desc { font-size: 11.5px; color: var(--gray); line-height: 1.5; }
+
+    /* ─── VIDEO SECTIONS ───────────────────────────────────── */
+    .vid-section {
+      padding: 60px 48px;
+      border-top: 1px solid var(--border);
+    }
+
+    .vid-inner {
+      display: grid; grid-template-columns: 220px 1fr;
+      gap: 52px; align-items: start;
+      max-width: 1160px; margin: 0 auto;
+    }
+
+    .vid-info h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 38px; color: var(--pink);
+      letter-spacing: .04em; line-height: 1;
+      margin-bottom: 12px;
+    }
+    .vid-info p {
+      font-size: 13px; color: var(--gray);
+      line-height: 1.65; margin-bottom: 22px;
+    }
+    .ver-ref {
+      display: inline-flex; align-items: center; gap: 6px;
+      color: var(--pink); font-size: 11px; font-weight: 700;
+      letter-spacing: .15em; text-transform: uppercase;
+      text-decoration: none; transition: gap .2s;
+    }
+    .ver-ref:hover { gap: 12px; }
+
+    .vid-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    /* ─── PHONE CARD ───────────────────────────────────────── */
+    .pcard {
+      position: relative; display: block;
+      width: 100%; aspect-ratio: 9/16;
+      background: #101010;
+      border-radius: 20px;
+      border: 2px solid rgba(255,255,255,.1);
+      outline: 4px solid #0a0a0a;
+      overflow: hidden;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .3s, box-shadow .3s;
+    }
+    .pcard::before {
+      content: '';
+      position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+      width: 32%; height: 10px;
+      background: #090909;
+      border-radius: 0 0 8px 8px;
+      z-index: 5;
+    }
+    .pcard:hover {
+      transform: translateY(-7px) scale(1.025);
+      box-shadow: 0 0 35px rgba(240,113,141,.28), 0 20px 50px rgba(0,0,0,.5);
+      border-color: rgba(240,113,141,.35);
+    }
+
+    .pthumb {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--tb, linear-gradient(160deg,#0d000f 0%,#1d0025 55%,#0a000d 100%));
+    }
+    .pthumb::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 50% 55%,
+        rgba(240,113,141,.12) 0%, transparent 70%);
+    }
+
+    .ppbtn {
+      position: relative;
+      width: 42px; height: 42px; border-radius: 50%;
+      background: rgba(255,255,255,.1);
+      border: 2px solid rgba(255,255,255,.55);
+      display: flex; align-items: center; justify-content: center;
+      backdrop-filter: blur(4px);
+      transition: all .2s;
+    }
+    .ppbtn::after {
+      content: '';
+      width: 0; height: 0;
+      border-left: 13px solid rgba(255,255,255,.9);
+      border-top: 8px solid transparent;
+      border-bottom: 8px solid transparent;
+      margin-left: 3px;
+    }
+    .pcard:hover .ppbtn {
+      background: rgba(240,113,141,.4);
+      border-color: var(--pink);
+      transform: scale(1.12);
+    }
+
+    /* TikTok watermark on card */
+    .pcard-tt {
+      position: absolute; bottom: 14px; right: 12px;
+      font-size: 9px; font-weight: 700; letter-spacing: .06em;
+      color: rgba(255,255,255,.25);
+      z-index: 4;
+      pointer-events: none;
+    }
+
+    /* ─── FOOTER CTA ───────────────────────────────────────── */
+    .footer-cta {
+      padding: 80px 48px 100px;
+      border-top: 1px solid var(--border);
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 60px; align-items: center;
+      position: relative; overflow: hidden;
+    }
+    .footer-cta::after {
+      content: '';
+      position: absolute; bottom: -30px; right: -20px;
+      width: 280px; height: 380px;
+      background: url('assets/gloss.png') no-repeat center/contain;
+      opacity: .18; pointer-events: none;
+      filter: blur(1px);
+    }
+
+    .f-left h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(40px, 6vw, 72px);
+      line-height: .92; color: var(--pink);
+      margin-bottom: 20px;
+    }
+    .f-left p { font-size: 14px; color: rgba(255,255,255,.55); line-height: 1.75; }
+    .f-left p em { color: var(--pink); font-style: normal; }
+
+    .f-right h3 {
+      font-size: 11px; font-weight: 600; letter-spacing: .35em;
+      text-transform: uppercase; color: var(--gray); margin-bottom: 22px;
+    }
+    .social-btns { display: flex; flex-direction: column; gap: 12px; max-width: 290px; }
+
+    .btn-soc {
+      display: flex; align-items: center; gap: 12px;
+      padding: 14px 26px; border-radius: 100px;
+      font-size: 11px; font-weight: 700; letter-spacing: .15em;
+      text-transform: uppercase; text-decoration: none;
+      transition: all .3s; cursor: pointer;
+    }
+    .btn-soc svg { flex-shrink: 0; }
+
+    .btn-tt { background: var(--pink); color: var(--white); border: none; }
+    .btn-tt:hover { background: var(--pink-light); box-shadow: 0 0 30px rgba(240,113,141,.5); transform: translateX(4px); }
+
+    .btn-ig { background: transparent; color: var(--pink); border: 1.5px solid var(--pink); }
+    .btn-ig:hover { background: rgba(240,113,141,.1); box-shadow: 0 0 20px rgba(240,113,141,.2); transform: translateX(4px); }
+
+    /* ─── SCROLL FADE ──────────────────────────────────────── */
+    .fu { opacity: 0; transform: translateY(28px); transition: opacity .65s ease, transform .65s ease; }
+    .fu.in { opacity: 1; transform: none; }
+    .fu:nth-child(2) { transition-delay: .12s; }
+    .fu:nth-child(3) { transition-delay: .22s; }
+    .fu:nth-child(4) { transition-delay: .32s; }
+    .pcard.fu { transition-delay: calc(var(--i,0) * .07s); }
+
+    /* ─── RESPONSIVE ───────────────────────────────────────── */
+    @media (max-width: 900px) {
+      nav { padding: 16px 20px; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; padding: 100px 20px 60px; gap: 0; }
+      .hero-image { order: -1; }
+      .hero-img-crop { max-width: 320px; }
+      .vibe-section { padding: 60px 20px; }
+      .vibe-grid { grid-template-columns: repeat(2,1fr); }
+      .vid-section { padding: 48px 20px; }
+      .vid-inner { grid-template-columns: 1fr; gap: 28px; }
+      .vid-grid { grid-template-columns: repeat(2,1fr); }
+      .footer-cta { grid-template-columns: 1fr; padding: 60px 20px 80px; }
+      .footer-cta::after { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── NAV ──────────────────────────────────────────────────── -->
+<nav id="nav">
+  <a href="#" class="nav-logo">
+    <span class="star">✦</span>
+    THE FREY
+  </a>
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#referencias">Referências</a></li>
+    <li><a href="#como-usar">Como Usar</a></li>
+  </ul>
+  <a href="https://vt.tiktok.com/ZS9kS4MJbuHeS-3iIeb/" target="_blank" rel="noopener" class="btn-audio">
+    <span class="wave-bars">
+      <span class="wb"></span><span class="wb"></span><span class="wb"></span>
+      <span class="wb"></span><span class="wb"></span>
+    </span>
+    Usar o Áudio
+  </a>
+</nav>
+
+<!-- ─── HERO ──────────────────────────────────────────────────── -->
+<section class="hero" id="sobre">
+  <div class="hero-content">
+    <h1>
+      <span class="gloss-big">GLOSS</span>
+      <span class="dakiko">DA KIKO</span>
+    </h1>
+    <p class="hero-tagline">
+      <span class="pk">✦</span>
+      Creator Inspiration Hub
+      <span class="pk">✦</span>
+    </p>
+    <p class="hero-desc">
+      Uma faixa que mistura atitude, confiança e lifestyle.<br>
+      Aqui você encontra referências para criar <b>do seu jeito</b><br>
+      e fazer parte desse movimento.
+    </p>
+    <a href="https://vt.tiktok.com/ZS9kS4MJbuHeS-3iIeb/" target="_blank" rel="noopener" class="btn-play">
+      <span class="play-circle"></span>
+      Ouça um Trecho
+    </a>
+  </div>
+  <div class="hero-image">
+    <div class="hero-img-crop">
+      <img src="assets/gloss.png" alt="Gloss da Kiko — The Frey">
+    </div>
+  </div>
+</section>
+
+<!-- ─── VIBE SECTION ──────────────────────────────────────────── -->
+<section class="vibe-section" id="referencias">
+  <p class="section-label">
+    <span class="pk">✦</span>
+    Escolha Sua Vibe
+    <span class="pk">✦</span>
+  </p>
+  <div class="vibe-grid">
+
+    <a href="#grwm" class="vibe-card fu">
+      <div class="vibe-icon">
+        <svg viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="15" y1="6" x2="15" y2="33"/>
+          <path d="M10 33 Q15 42 20 33"/>
+          <circle cx="34" cy="21" r="11"/>
+          <line x1="34" y1="32" x2="34" y2="44"/>
+          <line x1="29" y1="44" x2="39" y2="44"/>
+        </svg>
+      </div>
+      <p class="vibe-name">GRWM</p>
+      <p class="vibe-desc">se arrumando, maquiagem, look</p>
+    </a>
+
+    <a href="#lipsync" class="vibe-card fu">
+      <div class="vibe-icon">
+        <svg viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M8 22 C14 14 22 17 26 22 C30 17 38 14 44 22 C42 34 35 40 26 40 C17 40 10 34 8 22Z"/>
+          <path d="M18 22 C21 28 31 28 34 22"/>
+          <path d="M21 22 C23 20 29 20 31 22"/>
+        </svg>
+      </div>
+      <p class="vibe-name">LIP SYNC</p>
+      <p class="vibe-desc">câmera, atitude e trecho da música</p>
+    </a>
+
+    <a href="#daily" class="vibe-card fu">
+      <div class="vibe-icon">
+        <svg viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="14" y="5" width="24" height="42" rx="5"/>
+          <line x1="22" y1="11" x2="30" y2="11"/>
+          <circle cx="26" cy="42" r="2.5"/>
+          <path d="M20 26 C20 22 32 22 32 26" />
+          <path d="M23 26 L26 23 L29 26"/>
+          <rect x="19" y="28" width="14" height="8" rx="2"/>
+        </svg>
+      </div>
+      <p class="vibe-name">Daily / Lifestyle</p>
+      <p class="vibe-desc">rotina, rolê, lifestyle, faculdade, academia</p>
+    </a>
+
+    <a href="#pov" class="vibe-card fu">
+      <div class="vibe-icon">
+        <svg viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="7" y="19" width="38" height="27" rx="3"/>
+          <rect x="7" y="10" width="38" height="11" rx="2"/>
+          <line x1="17" y1="10" x2="21" y2="21"/>
+          <line x1="27" y1="10" x2="31" y2="21"/>
+          <line x1="37" y1="10" x2="41" y2="21"/>
+          <path d="M22 28 L22 38 L33 33 Z" fill="currentColor" stroke="none"/>
+        </svg>
+      </div>
+      <p class="vibe-name">POV</p>
+      <p class="vibe-desc">situações, cenas e identificação</p>
+    </a>
+
+  </div>
+</section>
+
+<!-- ─── GRWM ───────────────────────────────────────────────────── -->
+<section class="vid-section" id="grwm">
+  <div class="vid-inner">
+    <div class="vid-info fu">
+      <h2>GRWM</h2>
+      <p>Se arrume, produza, faça sua make, escolha o look e entre na vibe.</p>
+      <a href="#grwm" class="ver-ref">Ver Referências →</a>
+    </div>
+    <div class="vid-grid">
+      <a href="https://vt.tiktok.com/ZSV8YQCof/" target="_blank" rel="noopener"
+         class="pcard fu" style="--i:0">
+        <div class="pthumb" style="--tb:linear-gradient(160deg,#1a0012 0%,#300025 55%,#120010 100%)">
+          <div class="ppbtn"></div>
+        </div>
+        <span class="pcard-tt">TikTok</span>
+      </a>
+      <a href="https://vt.tiktok.com/ZSV8YyEPv/" target="_blank" rel="noopener"
+         class="pcard fu" style="--i:1">
+        <div class="pthumb" style="--tb:linear-gradient(160deg,#200010 0%,#38001e 55%,#160008 100%)">
+          <div class="ppbtn"></div>
+        </div>
+        <span class="pcard-tt">TikTok</span>
+      </a>
+      <a href="https://vt.tiktok.com/ZSV8Y55C1/" target="_blank" rel="noopener"
+         class="pcard fu" style="--i:2">
+        <div class="pthumb" style="--tb:linear-gradient(160deg,#15001a 0%,#280028 55%,#100015 100%)">
+          <div class="ppbtn"></div>
+        </div>
+        <span class="pcard-tt">TikTok</span>
+      </a>
+      <a href="https://vt.tiktok.com/ZSV8YpA9f/" target="_blank" rel="noopener"
+         class="pcard fu" style="--i:3">
+        <div class="pthumb" style="--tb:linear-gradient(160deg,#1a000f 0%,#300022 55%,#12000c 100%)">
+          <div class="ppbtn"></div>
+        </div>
+        <span class="pcard-tt">TikTok</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── LIP SYNC ──────────────────────────────────────────────── -->
+<section class="vid-section" id="lipsync">
+  <div class="vid-inner">
+    <div class="vid-info fu">
+      <h2>LIP SYNC</h2>
+      <p>Lábios sincronizados, atitude, expressão e trecho da música.</p>
+      <a href="#lipsync" class="ver-ref">Ver Referências →</a>
+    </div>
+    <div class="vid-grid">
+      <a href="https://vt.tiktok.com/ZSV8FV7R9/" target="_blank" rel="noopener"
+         class="pcard fu" style="--i:0">
+        <div class="pthumb" style="--tb:linear-gradient(160deg,#0d0018 0%,#1e0030 55%,#08000f 100%)">
+          <div class="ppbtn"></div>
+        </div>
+        <span class="pcard-tt">TikTok</span>
+      </a>
+      <a href="https://vt.tiktok.com/ZSV8FHw17/" target="_blank" rel="noopener"
+         class="pcard fu" style="--i:1">
+        <div class="pthumb" style="--tb:linear-gradient(160deg,#120015 0%,#240025 55%,#0e0010 100%)">
+          <div class="ppbtn"></div>
+        </div>
+        <span class="pcard-tt">TikTok</span>
+      </a>
+      <a href="https://vt.tiktok.com/ZSV8FCARe/" target="_blank" rel="noopener"
+         class="pcard fu" style="--i:2">
+        <div class="pthumb" style="--tb:linear-gradient(160deg,#180012 0%,#2c0022 55%,#110010 100%)">
+          <div class="ppbtn"></div>
+        </div>
+        <span class="pcard-tt">TikTok</span>
+      </a>
+      <a href="https://vt.tiktok.com/ZSV8F97TT/" target="_blank" rel="noopener"
+         class="pcard fu" style="--i:3">
+        <div class="pthumb" style="--tb:linear-gradient(160deg,#0e0012 0%,#200028 55%,#0a000e 100%)">
+          <div class="ppbtn"></div>
+        </div>
+        <span class="pcard-tt">TikTok</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── DAILY / LIFESTYLE ─────────────────────────────────────── -->
+<section class="vid-section" id="daily">
+  <div class="vid-inner">
+    <div class="vid-info fu">
+      <h2>DAILY /<br>LIFESTYLE</h2>
+      <p>Mostre seu dia, seu rolê, sua rotina. Do seu jeito, com sua estética.</p>
+      <a href="#daily" class="ver-ref">Ver Referências →</a>
+    </div>
+    <div class="vid-grid">
+      <a href="https://vt.tiktok.com/ZSV82PDLe/" target="_blank" rel="noopener"
+         class="pcard fu" style="--i:0">
+        <div class="pthumb" style="--tb:linear-gradient(160deg,#10001c 0%,#220030 55%,#0c0015 100%)">
+          <div class="ppbtn"></div>
+        </div>
+        <span class="pcard-tt">TikTok</span>
+      </a>
+      <a href="https://vt.tiktok.com/ZSV82faBe/" target="_blank" rel="noopener"
+         class="pcard fu" style="--i:1">
+        <div class="pthumb" style="--tb:linear-gradient(160deg,#180010 0%,#2e0020 55%,#120010 100%)">
+          <div class="ppbtn"></div>
+        </div>
+        <span class="pcard-tt">TikTok</span>
+      </a>
+      <a href="https://vt.tiktok.com/ZSV82xLES/" target="_blank" rel="noopener"
+         class="pcard fu" style="--i:2">
+        <div class="pthumb" style="--tb:linear-gradient(160deg,#0e0018 0%,#1e0028 55%,#0a0012 100%)">
+          <div class="ppbtn"></div>
+        </div>
+        <span class="pcard-tt">TikTok</span>
+      </a>
+      <a href="https://vt.tiktok.com/ZSV82h6ym/" target="_blank" rel="noopener"
+         class="pcard fu" style="--i:3">
+        <div class="pthumb" style="--tb:linear-gradient(160deg,#160014 0%,#280024 55%,#100010 100%)">
+          <div class="ppbtn"></div>
+        </div>
+        <span class="pcard-tt">TikTok</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── POV ───────────────────────────────────────────────────── -->
+<section class="vid-section" id="pov">
+  <div class="vid-inner">
+    <div class="vid-info fu">
+      <h2>POV</h2>
+      <p>Crie situações, conte histórias, encene cenas que combinem com a letra e com você.</p>
+      <a href="#pov" class="ver-ref">Ver Referências →</a>
+    </div>
+    <div class="vid-grid">
+      <a href="https://vt.tiktok.com/ZSV82uMWA/" target="_blank" rel="noopener"
+         class="pcard fu" style="--i:0">
+        <div class="pthumb" style="--tb:linear-gradient(160deg,#0a0018 0%,#1a002c 55%,#06000f 100%)">
+          <div class="ppbtn"></div>
+        </div>
+        <span class="pcard-tt">TikTok</span>
+      </a>
+      <a href="https://vt.tiktok.com/ZSV82fJ8b/" target="_blank" rel="noopener"
+         class="pcard fu" style="--i:1">
+        <div class="pthumb" style="--tb:linear-gradient(160deg,#14000e 0%,#260020 55%,#0f000a 100%)">
+          <div class="ppbtn"></div>
+        </div>
+        <span class="pcard-tt">TikTok</span>
+      </a>
+      <a href="https://vt.tiktok.com/ZSV82QuYk/" target="_blank" rel="noopener"
+         class="pcard fu" style="--i:2">
+        <div class="pthumb" style="--tb:linear-gradient(160deg,#0c001a 0%,#1e002e 55%,#080012 100%)">
+          <div class="ppbtn"></div>
+        </div>
+        <span class="pcard-tt">TikTok</span>
+      </a>
+      <a href="https://vt.tiktok.com/ZSV82FJQ4/" target="_blank" rel="noopener"
+         class="pcard fu" style="--i:3">
+        <div class="pthumb" style="--tb:linear-gradient(160deg,#160010 0%,#2a0022 55%,#10000c 100%)">
+          <div class="ppbtn"></div>
+        </div>
+        <span class="pcard-tt">TikTok</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER CTA ────────────────────────────────────────────── -->
+<section class="footer-cta" id="como-usar">
+  <div class="f-left fu">
+    <h2>FAZ DO<br>SEU JEITO.</h2>
+    <p>
+      As referências são só um ponto de partida.<br>
+      <em>Crie, adapte, transforme.</em><br>
+      O importante é ser real.
+    </p>
+  </div>
+  <div class="f-right fu">
+    <h3>Use o Áudio</h3>
+    <div class="social-btns">
+      <a href="https://vt.tiktok.com/ZS9kS4MJbuHeS-3iIeb/" target="_blank" rel="noopener" class="btn-soc btn-tt">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.35 6.35 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V9.07a8.27 8.27 0 004.84 1.55V7.17a4.85 4.85 0 01-1.07-.48z"/>
+        </svg>
+        Usar no TikTok
+      </a>
+      <a href="https://www.instagram.com/reels/audio/28028660010055156?igsh=eWU3eXE2YjFqY2Ft" target="_blank" rel="noopener" class="btn-soc btn-ig">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="2" y="2" width="20" height="20" rx="5"/>
+          <circle cx="12" cy="12" r="5"/>
+          <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/>
+        </svg>
+        Usar no Instagram
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+  /* Scroll fade-in */
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.fu').forEach(el => obs.observe(el));
+
+  /* Nav opacity on scroll */
+  window.addEventListener('scroll', () => {
+    document.getElementById('nav').style.background =
+      window.scrollY > 40 ? 'rgba(8,8,8,.97)' : 'rgba(8,8,8,.8)';
+  }, { passive: true });
+
+  /* Vibe cards → smooth scroll */
+  document.querySelectorAll('.vibe-card').forEach(card => {
+    card.addEventListener('click', e => {
+      const href = card.getAttribute('href');
+      if (href && href.startsWith('#')) {
+        e.preventDefault();
+        const target = document.querySelector(href);
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+
+  /* TikTok thumbnails via oEmbed — progressive enhancement */
+  (async () => {
+    const cards = document.querySelectorAll('.pcard[href*="tiktok"]');
+    const fetchThumb = async (url) => {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 6000);
+      try {
+        const endpoint = `https://www.tiktok.com/oembed?url=${encodeURIComponent(url)}`;
+        const res = await fetch(endpoint, { signal: controller.signal });
+        clearTimeout(timer);
+        if (!res.ok) return null;
+        const data = await res.json();
+        return data.thumbnail_url || null;
+      } catch {
+        clearTimeout(timer);
+        return null;
+      }
+    };
+    for (const card of cards) {
+      const thumbUrl = await fetchThumb(card.getAttribute('href'));
+      if (!thumbUrl) continue;
+      const pthumb = card.querySelector('.pthumb');
+      if (!pthumb) continue;
+      pthumb.style.cssText += `;background-image:url(${thumbUrl});background-size:cover;background-position:center top;`;
+      /* darken so the play button stays readable */
+      const overlay = document.createElement('div');
+      overlay.style.cssText = 'position:absolute;inset:0;background:rgba(0,0,0,.25);';
+      pthumb.insertBefore(overlay, pthumb.firstChild);
+    }
+  })();
+</script>
+</body>
+</html>
